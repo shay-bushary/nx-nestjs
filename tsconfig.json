@@ -8,6 +8,9 @@
     },
     {
       "path": "./apps/nx-nest"
+    },
+    {
+      "path": "./libs/shared"
     }
   ]
 }

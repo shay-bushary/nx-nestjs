@@ -16,6 +16,10 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["@nx-workspace/source"]
+    "customConditions": ["@nx-workspace/source"],
+    "baseUrl": ".",
+    "paths": {
+      "@nx-shay/shared": ["libs/shared/src/index.ts"]
+    }
   }
 }

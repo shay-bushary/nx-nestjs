@@ -1,0 +1,19 @@
+services:
+  nx-nest:
+    build:
+      context: .
+      dockerfile: apps/nx-nest/Dockerfile
+    container_name: nx-nest-app
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=3000
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

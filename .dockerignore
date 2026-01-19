@@ -1,0 +1,30 @@
+# Dependencies
+node_modules
+
+# Build outputs
+**/dist
+
+# Nx cache
+.nx
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode
+.idea
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test files
+**/*.spec.ts
+**/*.test.ts
+coverage
+
+# Documentation
+*.md
+docs
+docs-claude

@@ -20,9 +20,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /* Path mapping */
+    "baseUrl": ".",
+    "paths": {
+      "@nx-shay/shared": ["../../libs/shared/src/index.ts"]
+    }
   },
-  "include": ["src"]
+  "include": ["src", "../../libs/shared/src"]
 }

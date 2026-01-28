@@ -194,30 +194,30 @@ Wire up Nx project configs for both apps, add Dockerfile for nx-react (nginx), u
 ### Phase 6: Frontend — API Client + Auth UI
 
 **Assigned to**: frontend-engineer
-**Date Started**:
-**Status**: [ ] Not Started | [ ] In Progress | [ ] Completed
+**Date Started**: 2026-01-28
+**Status**: [ ] Not Started | [ ] In Progress | [x] Completed
 
-- [ ] Create API client module (fetch wrapper with token management, auto-refresh)
-- [ ] Add AuthContext provider (login, register, logout, token state)
-- [ ] Create Login page and Register page
-- [ ] Add ProtectedRoute wrapper component
-- [ ] Add header/navbar with user info and logout button
-- [ ] Configure Vite proxy: `/api` → `http://localhost:3000` for dev
-- [ ] Update React Router with auth routes (`/login`, `/register`)
+- [x] Create API client module (fetch wrapper with token management, auto-refresh)
+- [x] Add AuthContext provider (login, register, logout, token state)
+- [x] Create Login page and Register page
+- [x] Add ProtectedRoute wrapper component
+- [x] Add header/navbar with user info and logout button
+- [x] Configure Vite proxy: `/api` → `http://localhost:3001` for dev
+- [x] Update React Router with auth routes (`/login`, `/register`)
 
 #### Phase 6 Completion Report
 
 | Question                                 | Response |
 | ---------------------------------------- | -------- |
-| What was implemented?                    |          |
-| Were there any deviations from the plan? |          |
-| Issues/blockers encountered?             |          |
-| How were issues resolved?                |          |
-| Any technical debt introduced?           |          |
-| Recommendations for next phase?          |          |
+| What was implemented?                    | API client with auto-refresh, AuthContext, Login/Register pages, ProtectedRoute, header/navbar, Vite proxy, auth routes |
+| Were there any deviations from the plan? | Vite proxy targets port 3001 instead of 3000 (React dev server uses 3000). Header hidden on login/register pages. |
+| Issues/blockers encountered?             | Needed tsconfig path mapping for @nx-shay/shared in React app |
+| How were issues resolved?                | Added path alias in vite.config.ts and tsconfig.app.json |
+| Any technical debt introduced?           | None |
+| Recommendations for next phase?          | Proceed with Phase 7 (Leaderboard frontend). Auth flow ready for integration testing. |
 
-**Completed by**:
-**Date Completed**:
+**Completed by**: frontend-engineer
+**Date Completed**: 2026-01-28
 
 #### Notes for Future Phases
 

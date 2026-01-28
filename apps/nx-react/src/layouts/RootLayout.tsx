@@ -1,10 +1,12 @@
 import { Outlet, Link, useLocation } from 'react-router';
 import { TwoPlayerProvider } from '../context/TwoPlayerContext';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import styles from './RootLayout.module.css';
 
 export function RootLayout() {
   const { isAuthenticated, user, logout } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const location = useLocation();
   
   const authPages = ['/login', '/register'];
@@ -20,6 +22,14 @@ export function RootLayout() {
                 Hangman Game
               </Link>
               <nav className={styles.nav}>
+                <button 
+                  onClick={toggleTheme} 
+                  className={styles.themeToggle}
+                  aria-label="Toggle theme"
+                  title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+                >
+                  {theme === 'light' ? '🌙' : '☀️'}
+                </button>
                 {isAuthenticated ? (
                   <>
                     <span className={styles.username}>Welcome, {user?.username}</span>

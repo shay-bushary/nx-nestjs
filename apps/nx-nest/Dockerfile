@@ -31,7 +31,7 @@ FROM docker.io/node:lts-alpine
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
-ENV PORT=3000
+ENV PORT=8080
 
 WORKDIR /app
 
@@ -42,7 +42,7 @@ COPY package*.json ./
 RUN npm ci --omit=dev
 
 # Copy nx-nest build output (shared library is bundled into main.js)
-COPY --from=builder /app/apps/nx-nest/dist ./
+COPY --from=builder /app/dist/apps/nx-nest ./
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S nodejs && \
@@ -51,6 +51,6 @@ RUN addgroup -g 1001 -S nodejs && \
 
 USER nestjs
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["node", "main.js"]

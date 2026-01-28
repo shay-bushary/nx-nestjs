@@ -50,32 +50,35 @@ Add dark mode toggle to the React app using a CSS class on `<html>`, a React con
 ### Phase 2: Toggle UI & Component Adjustments
 
 **Assigned to**: frontend-engineer
-**Date Started**:
-**Status**: [ ] Not Started | [ ] In Progress | [ ] Completed
+**Date Started**: 2026-01-29
+**Status**: [ ] Not Started | [ ] In Progress | [x] Completed
 
-- [ ] Add dark mode toggle button in `RootLayout.tsx` header (sun/moon icon or simple text toggle)
-- [ ] Update hardcoded colors in CSS modules that don't use CSS variables (glassmorphism cards, table hover states, etc.) to use CSS variables or adjust for dark mode:
-  - `RootLayout.module.css` — header background
-  - `Login.module.css` / `Register.module.css` — card backgrounds, input styles
-  - `Leaderboard.module.css` / `MyScores.module.css` — table row hover colors
-  - `Scoreboard.module.css` — active player gradient
-  - `GameOverModal.module.css` / `FinalScoreModal.module.css` — modal backgrounds
-- [ ] Verify all pages render correctly in both modes (menu, game, auth, leaderboard)
-- [ ] Ensure `prefers-color-scheme` media query sets initial theme if no localStorage value
+- [x] Add dark mode toggle button in `RootLayout.tsx` header (moon/sun emoji toggle)
+- [x] Update hardcoded colors in CSS modules that don't use CSS variables:
+  - `RootLayout.module.css` — header background dark override
+  - `Leaderboard.module.css` / `MyScores.module.css` — table backgrounds, borders, hover states
+  - `Scoreboard.module.css` — active player gradient and shadows
+  - `FinalScoreModal.module.css` — winner highlight background
+  - `AttemptsDisplay.module.css` — progress bar background
+  - `TwoPlayerSetup.module.css` — card shadow and input borders
+  - `TwoPlayerGame.module.css` — player banner shadow
+  - Login/Register, GameOverModal, RoundTransition — already compatible, verified
+- [x] Verify all pages render correctly in both modes
+- [x] Verified `prefers-color-scheme` already handled in ThemeContext getInitialTheme
 
 #### Phase 2 Completion Report
 
 | Question                                 | Response |
 | ---------------------------------------- | -------- |
-| What was implemented?                    |          |
-| Were there any deviations from the plan? |          |
-| Issues/blockers encountered?             |          |
-| How were issues resolved?                |          |
-| Any technical debt introduced?           |          |
-| Recommendations for next phase?          |          |
+| What was implemented?                    | Toggle button in header, dark mode CSS overrides in 9 CSS modules, verified system theme detection |
+| Were there any deviations from the plan? | Login/Register CSS needed no changes — already used CSS variables properly |
+| Issues/blockers encountered?             | None |
+| How were issues resolved?                | N/A |
+| Any technical debt introduced?           | `--color-white` variable holds dark value in dark mode (semantic mismatch, acceptable trade-off) |
+| Recommendations for next phase?          | N/A — dark mode implementation complete |
 
-**Completed by**:
-**Date Completed**:
+**Completed by**: frontend-engineer
+**Date Completed**: 2026-01-29
 
 #### Notes for Future Phases
 

@@ -15,5 +15,9 @@ Global prefix: `/api`
 - `GET /api/scores/me` — current user's game history (requires JWT)
 - `GET /api/leaderboard` — public leaderboard. Optional query: `?mode=single|two`
 
+## Hangman (`/api/hangman`)
+- `GET /api/hangman/word` — random word for hangman game. Returns `{ data: { word, length } }`
+- `POST /api/hangman/validate-guess` — check letter guess. Body: `{ word, guess }`. Returns `{ data: { isCorrect, positions } }`
+
 ## App
 - `GET /api` — health/hello endpoint

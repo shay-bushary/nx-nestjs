@@ -1,2 +1,2 @@
-export * from './lib/helpers/index';
-export * from './lib/types/index';
+export * from './lib/helpers/index.js';
+export * from './lib/types/index.js';

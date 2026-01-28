@@ -10,12 +10,12 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3000,
+    port: 3003,
     host: true,
     allowedHosts: ['.share.zrok.io'],
     proxy: {
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'http://localhost:8080',
         changeOrigin: true,
       },
     },

@@ -33,6 +33,11 @@
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
+:global(.dark) .progressBarContainer {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 .progressBar {
   height: 100%;
   transition: all 0.3s ease;

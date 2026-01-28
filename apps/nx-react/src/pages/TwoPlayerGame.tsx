@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import { useHangmanGame } from "../hooks/useHangmanGame";
 import { useKeyboardInput } from "../hooks/useKeyboardInput";
 import { useTwoPlayerContext } from "../context/TwoPlayerContext";
+import { useAuth } from "../context/AuthContext";
+import { apiPost } from "../api/client";
 import { HangmanVisual } from "../components/HangmanVisual";
 import { WordDisplay } from "../components/WordDisplay";
 import { LetterKeyboard } from "../components/LetterKeyboard";
@@ -16,6 +18,7 @@ type GamePhase = "playing" | "transition" | "ended";
 
 export function TwoPlayerGame() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const {
     state: twoPlayerState,
     incrementScore,
@@ -40,10 +43,14 @@ export function TwoPlayerGame() {
     playerName: string;
     word: string;
   } | null>(null);
+  const [roundStartTime, setRoundStartTime] = useState<number | null>(null);
+  const hasSubmittedRoundScore = useRef(false);
 
   // Start game on mount
   useEffect(() => {
     startGame();
+    setRoundStartTime(Date.now());
+    hasSubmittedRoundScore.current = false;
   }, [startGame]);
 
   // Handle round end (win or lose)
@@ -66,6 +73,9 @@ export function TwoPlayerGame() {
         word: gameState.word,
       });
 
+      // Submit score to backend
+      submitRoundScore(gameState.gameStatus === "won");
+
       // Show transition
       setGamePhase("transition");
     }
@@ -78,6 +88,34 @@ export function TwoPlayerGame() {
     incrementScore,
   ]);
 
+  const submitRoundScore = async (won: boolean) => {
+    if (
+      !isAuthenticated ||
+      hasSubmittedRoundScore.current ||
+      !roundStartTime
+    ) {
+      return;
+    }
+
+    hasSubmittedRoundScore.current = true;
+
+    try {
+      const duration = Math.floor((Date.now() - roundStartTime) / 1000);
+      const guessesUsed = gameState.wrongGuesses;
+
+      await apiPost("/api/scores", {
+        word: gameState.word,
+        guessesUsed,
+        won,
+        gameMode: "two",
+        duration,
+      });
+    } catch (error) {
+      console.error("Failed to submit score:", error);
+      // Don't block game flow on error
+    }
+  };
+
   const handleContinue = () => {
     // Switch to next player
     switchPlayer();
@@ -85,6 +123,8 @@ export function TwoPlayerGame() {
 
     // Reset hangman game and start new round
     resetHangmanGame();
+    setRoundStartTime(Date.now());
+    hasSubmittedRoundScore.current = false;
     startGame();
 
     // Return to playing phase
@@ -137,6 +177,8 @@ export function TwoPlayerGame() {
         <button
           onClick={() => {
             resetHangmanGame();
+            setRoundStartTime(Date.now());
+            hasSubmittedRoundScore.current = false;
             startGame();
           }}
           className="btn btn-primary"

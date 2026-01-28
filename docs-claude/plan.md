@@ -230,29 +230,29 @@ Wire up Nx project configs for both apps, add Dockerfile for nx-react (nginx), u
 ### Phase 7: Frontend — Leaderboard + Score Submission
 
 **Assigned to**: frontend-engineer
-**Date Started**:
-**Status**: [ ] Not Started | [ ] In Progress | [ ] Completed
+**Date Started**: 2026-01-28
+**Status**: [ ] Not Started | [ ] In Progress | [x] Completed
 
-- [ ] Hook score submission into game-end flow (SinglePlayer and TwoPlayer games)
-- [ ] Create Leaderboard page with sortable scores table
-- [ ] Create "My Scores" / game history page
-- [ ] Add leaderboard link to main menu
-- [ ] Add game mode filter toggle on leaderboard
-- [ ] Update React Router with new routes (`/leaderboard`, `/my-scores`)
+- [x] Hook score submission into game-end flow (SinglePlayer and TwoPlayer games)
+- [x] Create Leaderboard page with sortable scores table
+- [x] Create "My Scores" / game history page
+- [x] Add leaderboard link to main menu
+- [x] Add game mode filter toggle on leaderboard
+- [x] Update React Router with new routes (`/leaderboard`, `/my-scores`)
 
 #### Phase 7 Completion Report
 
 | Question                                 | Response |
 | ---------------------------------------- | -------- |
-| What was implemented?                    |          |
-| Were there any deviations from the plan? |          |
-| Issues/blockers encountered?             |          |
-| How were issues resolved?                |          |
-| Any technical debt introduced?           |          |
-| Recommendations for next phase?          |          |
+| What was implemented?                    | Score submission in SinglePlayer + TwoPlayer game-end flows, Leaderboard page with mode filter tabs, My Scores page with game history, main menu links, /leaderboard and /my-scores routes |
+| Were there any deviations from the plan? | No |
+| Issues/blockers encountered?             | None |
+| How were issues resolved?                | N/A |
+| Any technical debt introduced?           | None |
+| Recommendations for next phase?          | All 7 phases complete. Ready for integration testing and deployment. |
 
-**Completed by**:
-**Date Completed**:
+**Completed by**: frontend-engineer
+**Date Completed**: 2026-01-28
 
 ---
 

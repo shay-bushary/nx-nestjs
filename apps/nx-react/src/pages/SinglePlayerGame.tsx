@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router";
 import { useHangmanGame } from "../hooks/useHangmanGame";
 import { useKeyboardInput } from "../hooks/useKeyboardInput";
+import { useAuth } from "../context/AuthContext";
+import { apiPost } from "../api/client";
 import { HangmanVisual } from "../components/HangmanVisual";
 import { WordDisplay } from "../components/WordDisplay";
 import { LetterKeyboard } from "../components/LetterKeyboard";
@@ -11,6 +13,7 @@ import styles from "./SinglePlayerGame.module.css";
 
 export function SinglePlayerGame() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const {
     gameState,
     isLoading,
@@ -21,12 +24,62 @@ export function SinglePlayerGame() {
     resetGame,
   } = useHangmanGame();
 
+  const [gameStartTime, setGameStartTime] = useState<number | null>(null);
+  const hasSubmittedScore = useRef(false);
+
   useEffect(() => {
     startGame();
+    setGameStartTime(Date.now());
+    hasSubmittedScore.current = false;
   }, [startGame]);
+
+  // Submit score when game ends
+  useEffect(() => {
+    const submitScore = async () => {
+      if (
+        !isAuthenticated ||
+        hasSubmittedScore.current ||
+        gameState.gameStatus === "playing" ||
+        !gameStartTime
+      ) {
+        return;
+      }
+
+      hasSubmittedScore.current = true;
+
+      try {
+        const duration = Math.floor((Date.now() - gameStartTime) / 1000);
+        const guessesUsed = gameState.wrongGuesses;
+        const won = gameState.gameStatus === "won";
+
+        await apiPost("/api/scores", {
+          word: gameState.word,
+          guessesUsed,
+          won,
+          gameMode: "single",
+          duration,
+        });
+      } catch (error) {
+        console.error("Failed to submit score:", error);
+        // Don't block game flow on error
+      }
+    };
+
+    if (gameState.gameStatus !== "playing") {
+      submitScore();
+    }
+  }, [
+    gameState.gameStatus,
+    gameState.word,
+    gameState.wrongGuesses,
+    gameStartTime,
+    isAuthenticated,
+  ]);
 
   const handlePlayAgain = () => {
     resetGame();
+    setGameStartTime(Date.now());
+    hasSubmittedScore.current = false;
     startGame();
   };
 

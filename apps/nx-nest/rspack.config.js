@@ -9,6 +9,7 @@ module.exports = {
   resolve: {
     alias: {
       '@nx-shay/shared': join(__dirname, '../../libs/shared/src/index.ts'),
+      '@nx-shay/backend-filters': join(__dirname, '../../libs/backend/filters/src/index.ts'),
     },
   },
   plugins: [
@@ -34,6 +35,11 @@ module.exports = {
 
             // Bundle @nx-shay/shared (resolve via alias)
             if (request === '@nx-shay/shared' || request.startsWith('@nx-shay/shared/')) {
+              return callback();
+            }
+
+            // Bundle @nx-shay/backend-filters (resolve via alias)
+            if (request === '@nx-shay/backend-filters' || request.startsWith('@nx-shay/backend-filters/')) {
               return callback();
             }
 

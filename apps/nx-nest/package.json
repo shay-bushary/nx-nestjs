@@ -7,7 +7,7 @@
       "build": {
         "executor": "nx:run-commands",
         "options": {
-          "command": "webpack-cli build",
+          "command": "rspack build",
           "args": [
             "--node-env=production"
           ],

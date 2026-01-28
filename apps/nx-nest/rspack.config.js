@@ -1,13 +1,10 @@
-const { NxAppWebpackPlugin } = require('@nx/webpack/app-plugin');
+const { NxAppRspackPlugin } = require('@nx/rspack/app-plugin');
 const { join } = require('path');
 
 module.exports = {
   output: {
     path: join(__dirname, 'dist'),
     clean: true,
-    ...(process.env.NODE_ENV !== 'production' && {
-      devtoolModuleFilenameTemplate: '[absolute-resource-path]',
-    }),
   },
   resolve: {
     alias: {
@@ -15,25 +12,24 @@ module.exports = {
     },
   },
   plugins: [
-    new NxAppWebpackPlugin({
+    new NxAppRspackPlugin({
       target: 'node',
-      compiler: 'tsc',
       main: './src/main.ts',
       tsConfig: './tsconfig.app.json',
-      assets: ["./src/assets"],
+      assets: ['./src/assets'],
       optimization: false,
       outputHashing: 'none',
       generatePackageJson: false,
-      sourceMap: true,
+      // Externalize all node_modules
+      externalDependencies: 'all',
     }),
-    // Custom plugin to modify externals after NxAppWebpackPlugin
+    // Plugin to modify externals after NxAppRspackPlugin - bundle @nx-shay/shared
     {
-      apply: (compiler) => {
+      apply(compiler) {
         compiler.hooks.afterEnvironment.tap('BundleSharedPlugin', () => {
           const originalExternals = compiler.options.externals;
 
-          // Wrap the externals to allow @nx-shay/shared to be bundled
-          compiler.options.externals = function(ctx, callback) {
+          compiler.options.externals = async function (ctx, callback) {
             const request = ctx.request;
 
             // Bundle @nx-shay/shared (resolve via alias)
@@ -45,7 +41,6 @@ module.exports = {
             if (typeof originalExternals === 'function') {
               return originalExternals(ctx, callback);
             } else if (Array.isArray(originalExternals)) {
-              // Process array of externals
               const processNext = (index) => {
                 if (index >= originalExternals.length) {
                   return callback();
@@ -56,9 +51,8 @@ module.exports = {
                     if (err || result) return callback(err, result);
                     processNext(index + 1);
                   });
-                } else if (typeof ext === 'object') {
-                  if (ext[request]) return callback(null, ext[request]);
-                  processNext(index + 1);
+                } else if (typeof ext === 'object' && ext[request]) {
+                  return callback(null, ext[request]);
                 } else {
                   processNext(index + 1);
                 }
@@ -69,7 +63,7 @@ module.exports = {
             }
           };
         });
-      }
-    }
+      },
+    },
   ],
 };

@@ -10,5 +10,10 @@ Global prefix: `/api`
 ## Users (`/api/users`)
 - `GET /api/users/me` — get current user (requires JWT Bearer token) returns `User`
 
+## Scores (`/api/scores`)
+- `POST /api/scores` — submit game score (requires JWT). Body: `{ word, guessesUsed, won, gameMode, duration }`
+- `GET /api/scores/me` — current user's game history (requires JWT)
+- `GET /api/leaderboard` — public leaderboard. Optional query: `?mode=single|two`
+
 ## App
 - `GET /api` — health/hello endpoint

@@ -156,33 +156,33 @@ Wire up Nx project configs for both apps, add Dockerfile for nx-react (nginx), u
 ### Phase 5: Backend — Leaderboard + Scores
 
 **Assigned to**: senior-backend-engineer
-**Date Started**:
-**Status**: [ ] Not Started | [ ] In Progress | [ ] Completed
+**Date Started**: 2026-01-28
+**Status**: [ ] Not Started | [ ] In Progress | [x] Completed
 
-- [ ] Create `ScoresModule`
-- [ ] Implement endpoints:
+- [x] Create `ScoresModule`
+- [x] Implement endpoints:
   - `POST /api/scores` — submit game score (protected)
   - `GET /api/scores/me` — current user's game history (protected)
   - `GET /api/leaderboard` — top scores, public
   - `GET /api/leaderboard?mode=single|two` — filter by game mode
-- [ ] Score model: userId, word, guessesUsed, won, gameMode, duration, createdAt
-- [ ] Leaderboard aggregation: rank, username, wins, totalGames, avgGuesses
-- [ ] Test all endpoints with curl
-- [ ] Update `docs-claude/backend-routes.md`
+- [x] Score model: userId, word, guessesUsed, won, gameMode, duration, createdAt
+- [x] Leaderboard aggregation: rank, username, wins, totalGames, avgGuesses
+- [x] Test all endpoints with curl
+- [x] Update `docs-claude/backend-routes.md`
 
 #### Phase 5 Completion Report
 
 | Question                                 | Response |
 | ---------------------------------------- | -------- |
-| What was implemented?                    |          |
-| Were there any deviations from the plan? |          |
-| Issues/blockers encountered?             |          |
-| How were issues resolved?                |          |
-| Any technical debt introduced?           |          |
-| Recommendations for next phase?          |          |
+| What was implemented?                    | ScoresModule (scores.service, scores.controller, leaderboard.controller), in-memory score store, leaderboard aggregation with mode filtering, backend-routes.md updated |
+| Were there any deviations from the plan? | Leaderboard split into separate controller (leaderboard.controller.ts) for cleaner separation |
+| Issues/blockers encountered?             | None |
+| How were issues resolved?                | N/A |
+| Any technical debt introduced?           | SubmitScoreDto is an interface (erased at runtime) — no runtime validation. Fine for now. |
+| Recommendations for next phase?          | Proceed with Phase 6 (Auth frontend). Both backend phases (4+5) complete. |
 
-**Completed by**:
-**Date Completed**:
+**Completed by**: senior-backend-engineer
+**Date Completed**: 2026-01-28
 
 #### Notes for Future Phases
 

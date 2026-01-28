@@ -41,10 +41,7 @@ COPY package*.json ./
 # Install production dependencies only
 RUN npm ci --omit=dev
 
-# Copy shared library build output
-COPY --from=builder /app/libs/shared/dist ./node_modules/@nx-shay/shared
-
-# Copy nx-nest build output
+# Copy nx-nest build output (shared library is bundled into main.js)
 COPY --from=builder /app/apps/nx-nest/dist ./
 
 # Create non-root user for security

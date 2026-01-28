@@ -115,34 +115,34 @@ Wire up Nx project configs for both apps, add Dockerfile for nx-react (nginx), u
 ### Phase 4: Backend — JWT Auth + User Endpoints
 
 **Assigned to**: senior-backend-engineer
-**Date Started**:
-**Status**: [ ] Not Started | [ ] In Progress | [ ] Completed
+**Date Started**: 2026-01-28
+**Status**: [ ] Not Started | [ ] In Progress | [x] Completed
 
-- [ ] Install: `@nestjs/jwt`, `@nestjs/passport`, `passport-jwt`, `bcrypt` (+ types)
-- [ ] Create `AuthModule` with JWT strategy (access + refresh tokens)
-- [ ] Create `UsersModule` with in-memory store (array-based, no DB for now)
-- [ ] Implement endpoints:
+- [x] Install: `@nestjs/jwt`, `@nestjs/passport`, `passport-jwt`, `bcrypt` (+ types)
+- [x] Create `AuthModule` with JWT strategy (access + refresh tokens)
+- [x] Create `UsersModule` with in-memory store (array-based, no DB for now)
+- [x] Implement endpoints:
   - `POST /api/auth/register` — create user, return tokens
   - `POST /api/auth/login` — validate credentials, return tokens
   - `POST /api/auth/refresh` — refresh access token
   - `GET /api/users/me` — current user profile (protected)
-- [ ] Add `JwtAuthGuard` for protected routes
-- [ ] Test all endpoints with curl
-- [ ] Update `docs-claude/backend-routes.md`
+- [x] Add `JwtAuthGuard` for protected routes
+- [x] Test all endpoints with curl
+- [x] Update `docs-claude/backend-routes.md`
 
 #### Phase 4 Completion Report
 
 | Question                                 | Response |
 | ---------------------------------------- | -------- |
-| What was implemented?                    |          |
-| Were there any deviations from the plan? |          |
-| Issues/blockers encountered?             |          |
-| How were issues resolved?                |          |
-| Any technical debt introduced?           |          |
-| Recommendations for next phase?          |          |
+| What was implemented?                    | AuthModule (JWT strategy, register/login/refresh endpoints), UsersModule (in-memory store, /me endpoint), JwtAuthGuard, backend-routes.md |
+| Were there any deviations from the plan? | No |
+| Issues/blockers encountered?             | `nx serve` failed due to outputPath mismatch (build outputs to `apps/nx-nest/dist/` not `dist/apps/nx-nest/`). Tested by running built output directly. |
+| How were issues resolved?                | Ran `node apps/nx-nest/dist/main.js` directly for testing. Pre-existing config issue not introduced by this phase. |
+| Any technical debt introduced?           | None |
+| Recommendations for next phase?          | Proceed with Phase 5 (Leaderboard/Scores backend). Consider fixing nx serve outputPath config separately. |
 
-**Completed by**:
-**Date Completed**:
+**Completed by**: senior-backend-engineer
+**Date Completed**: 2026-01-28
 
 #### Notes for Future Phases
 

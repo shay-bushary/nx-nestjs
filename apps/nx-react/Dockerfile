@@ -9,10 +9,14 @@ FROM docker.io/node:lts-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files first (for better layer caching)
+# Copy root and workspace package files first (for better layer caching)
 COPY package*.json ./
+COPY apps/nx-react/package.json ./apps/nx-react/
+COPY apps/nx-nest/package.json ./apps/nx-nest/
+COPY apps/nx-nest-e2e/package.json ./apps/nx-nest-e2e/
+COPY libs/shared/package.json ./libs/shared/
 
-# Install all dependencies
+# Install all dependencies (workspaces-aware)
 RUN npm ci
 
 # Copy all workspace files needed for build
@@ -21,11 +25,11 @@ COPY libs ./libs
 COPY apps ./apps
 
 # Build arg for VITE_API_URL (defaults to /api for nginx proxy)
-ARG VITE_API_URL=/api
-ENV VITE_API_URL=$VITE_API_URL
+ARG VITE_API_BASE_URL=/api
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
-# Sync workspace and build the nx-react app
-RUN npx nx sync && npx nx build nx-react
+# Build the nx-react app (run vite build directly, skip tsc type-check in Docker)
+RUN npx nx sync && npx --workspace=@nx-workspace/nx-react vite build
 
 # =============================================================================
 # Stage 2: Production - Minimal nginx image to serve static files

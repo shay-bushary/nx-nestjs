@@ -66,6 +66,10 @@
   box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
 }
 
+:global(.dark) .playerScore.winner {
+  background-color: rgba(76, 175, 80, 0.2);
+}
+
 .playerName {
   font-size: 1.1rem;
   font-weight: bold;

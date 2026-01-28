@@ -1,2 +1,2 @@
-export * from './shared';
-export * from './shared.service';
+export * from './shared.js';
+export * from './shared.service.js';

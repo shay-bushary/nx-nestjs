@@ -49,6 +49,10 @@
   margin: 0 auto;
 }
 
+:global(.dark) .tableContainer {
+  background-color: rgba(26, 26, 46, 0.95);
+}
+
 .table {
   width: 100%;
   border-collapse: collapse;
@@ -74,10 +78,20 @@
 
 .table tbody tr {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: var(--color-text);
+}
+
+:global(.dark) .table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text);
 }
 
 .table tbody tr:hover {
   background-color: rgba(33, 150, 243, 0.05);
+}
+
+:global(.dark) .table tbody tr:hover {
+  background-color: rgba(33, 150, 243, 0.15);
 }
 
 .table tbody tr:last-child {

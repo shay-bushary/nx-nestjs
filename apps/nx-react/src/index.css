@@ -34,6 +34,17 @@
   --gradient-menu: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
+:root.dark {
+  --color-text: #e0e0e0;
+  --color-text-light: #ccc;
+  --color-border: #e0e0e0;
+  --color-bg-light: #333;
+  --color-bg-disabled: #555;
+  --color-white: #1a1a2e;
+  --color-overlay: rgba(0, 0, 0, 0.8);
+  --gradient-menu: linear-gradient(135deg, #3a3d7c 0%, #4a2d6b 100%);
+}
+
 /* Global Reset for 100vh layout */
 html, body, #root {
   height: 100%;

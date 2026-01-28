@@ -61,6 +61,10 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+:global(.dark) .currentPlayerBanner {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
 .currentPlayerLabel {
   color: var(--color-text-light);
   font-size: 0.9rem;

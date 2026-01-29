@@ -2,6 +2,9 @@ const { NxAppRspackPlugin } = require('@nx/rspack/app-plugin');
 const { join } = require('path');
 
 module.exports = {
+  entry: {
+    main: join(__dirname, 'src/main.ts'),
+  },
   output: {
     path: join(__dirname, '../../dist/apps/nx-nest'),
     clean: true,

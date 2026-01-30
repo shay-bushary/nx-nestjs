@@ -7,7 +7,7 @@ module.exports = {
   },
   output: {
     path: join(__dirname, '../../dist/apps/nx-nest'),
-    clean: true,
+    clean: false,
   },
   resolve: {
     alias: {
@@ -33,11 +33,10 @@ module.exports = {
   // cache: true,                     // or { type: 'filesystem' } for disk-based cache
 
   // --- Watch options ---
-  // watchOptions: {
-  //   ignored: /node_modules/,       // ignore node_modules for faster watching
-  //   poll: 1000,                    // poll interval in ms (for network drives/VMs)
-  //   aggregateTimeout: 300,         // delay rebuild after first change (ms)
-  // },
+  watchOptions: {
+    ignored: [/node_modules/, /dist/],
+    aggregateTimeout: 1000,
+  },
 
   // --- Custom loaders ---
   // module: {

@@ -11,7 +11,9 @@
       "options": {
         "outputPath": "dist/apps/nx-nest",
         "rspackConfig": "apps/nx-nest/rspack.config.js",
+        "main": "apps/nx-nest/src/main.ts",
         "tsConfig": "apps/nx-nest/tsconfig.app.json",
+        "outputFileName": "main.js",
         "skipTypeChecking": true
 
         // --- Target platform ---
@@ -115,9 +117,7 @@
     "copy-workspace-modules": {
       "dependsOn": ["build"],
       "cache": true,
-      "outputs": [
-        "{workspaceRoot}/apps/nx-nest/dist/workspace_modules"
-      ],
+      "outputs": ["{workspaceRoot}/apps/nx-nest/dist/workspace_modules"],
       "executor": "@nx/js:copy-workspace-modules",
       "options": {
         "buildTarget": "build"
@@ -131,10 +131,11 @@
       "continuous": true,
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
-      "dependsOn": ["build"],
       "options": {
         "buildTarget": "nx-nest:build",
-        "runBuildTargetDependencies": false
+        "runBuildTargetDependencies": true,
+        "inspect": true,
+        "port": 9229
       },
       "configurations": {
         "development": {

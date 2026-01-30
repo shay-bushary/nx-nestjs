@@ -74,11 +74,6 @@ module.exports = {
       // runtimeChunk: true,            // separate runtime bundle
       // extractCss: true,              // extract CSS to files (web targets only)
       // outputPath: '../../dist/apps/nx-nest',  // override output dir
-
-      // --- File replacements ---
-      // fileReplacements: [
-      //   { replace: './src/environments/environment.ts', with: './src/environments/environment.prod.ts' }
-      // ],
     }),
     // Plugin to modify externals after NxAppRspackPlugin - bundle @nx-shay/shared
     {

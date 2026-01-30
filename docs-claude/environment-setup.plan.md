@@ -50,39 +50,29 @@ Enable running the NestJS app in `development`, `stage`, `production`, and `test
 ### Phase 2: Configure Nx fileReplacements & Build/Serve Configurations
 
 **Assigned to**: senior-backend-engineer
-**Date Started**:
-**Status**: [ ] Not Started | [ ] In Progress | [ ] Completed
+**Date Started**: 2026-01-30
+**Status**: [x] Completed
 
-- [ ] Update `project.json` build target — add `fileReplacements` to `production` configuration:
-  ```json
-  "fileReplacements": [{
-    "replace": "apps/nx-nest/src/environments/environment.ts",
-    "with": "apps/nx-nest/src/environments/environment.production.ts"
-  }]
-  ```
-- [ ] Add `stage` build configuration with fileReplacement pointing to `environment.stage.ts`
-- [ ] Add `test` build configuration with fileReplacement pointing to `environment.test.ts`
-- [ ] `development` configuration — no fileReplacement needed (uses default `environment.ts`)
-- [ ] Update `serve` target — add `stage` and `test` configurations mapping to their build targets:
-  ```json
-  "stage": { "buildTarget": "nx-nest:build:stage" },
-  "test": { "buildTarget": "nx-nest:build:test" }
-  ```
-- [ ] Remove the commented-out fileReplacements from rspack.config.js (Nx handles it via project.json)
+- [x] Update `project.json` build target — add `fileReplacements` to `production` configuration
+- [x] Add `stage` build configuration with fileReplacement pointing to `environment.stage.ts`
+- [x] Add `test` build configuration with fileReplacement pointing to `environment.test.ts`
+- [x] `development` configuration — no fileReplacement needed (uses default `environment.ts`)
+- [x] Update `serve` target — add `stage` and `test` configurations mapping to their build targets
+- [x] Remove the commented-out fileReplacements from rspack.config.js and project.json options
 
 #### Phase 2 Completion Report
 
 | Question                                 | Response |
 | ---------------------------------------- | -------- |
-| What was implemented?                    |          |
-| Were there any deviations from the plan? |          |
-| Issues/blockers encountered?             |          |
-| How were issues resolved?                |          |
-| Any technical debt introduced?           |          |
-| Recommendations for next phase?          |          |
+| What was implemented?                    | Added stage/test build+serve configs with fileReplacements, cleaned up stale comments |
+| Were there any deviations from the plan? | Also cleaned commented fileReplacements from project.json options block |
+| Issues/blockers encountered?             | None |
+| How were issues resolved?                | N/A |
+| Any technical debt introduced?           | No |
+| Recommendations for next phase?          | Wire environment imports into app code |
 
-**Completed by**:
-**Date Completed**:
+**Completed by**: senior-backend-engineer
+**Date Completed**: 2026-01-30
 
 #### Notes for Future Phases
 

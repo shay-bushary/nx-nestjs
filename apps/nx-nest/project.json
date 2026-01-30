@@ -46,12 +46,6 @@
         // --- Assets ---
         // "assets": ["apps/nx-nest/src/assets"],
 
-        // --- File replacements (env-specific swaps) ---
-        // "fileReplacements": [
-        //   { "replace": "apps/nx-nest/src/environments/environment.ts",
-        //     "with": "apps/nx-nest/src/environments/environment.prod.ts" }
-        // ],
-
         // --- Licenses ---
         // "extractLicenses": true,             // extract third-party licenses into separate file
 
@@ -78,15 +72,31 @@
           // "namedChunks": true
         },
         "production": {
-          "mode": "production"
-          // "sourceMap": "hidden",
-          // "optimization": true,
-          // "extractLicenses": true,
-          // "outputHashing": "all",
-          // "fileReplacements": [
-          //   { "replace": "apps/nx-nest/src/environments/environment.ts",
-          //     "with": "apps/nx-nest/src/environments/environment.prod.ts" }
-          // ]
+          "mode": "production",
+          "fileReplacements": [
+            {
+              "replace": "apps/nx-nest/src/environments/environment.ts",
+              "with": "apps/nx-nest/src/environments/environment.production.ts"
+            }
+          ]
+        },
+        "stage": {
+          "mode": "production",
+          "fileReplacements": [
+            {
+              "replace": "apps/nx-nest/src/environments/environment.ts",
+              "with": "apps/nx-nest/src/environments/environment.stage.ts"
+            }
+          ]
+        },
+        "test": {
+          "mode": "development",
+          "fileReplacements": [
+            {
+              "replace": "apps/nx-nest/src/environments/environment.ts",
+              "with": "apps/nx-nest/src/environments/environment.test.ts"
+            }
+          ]
         }
       }
     },
@@ -132,6 +142,12 @@
         },
         "production": {
           "buildTarget": "nx-nest:build:production"
+        },
+        "stage": {
+          "buildTarget": "nx-nest:build:stage"
+        },
+        "test": {
+          "buildTarget": "nx-nest:build:test"
         }
       }
     },

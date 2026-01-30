@@ -12,10 +12,7 @@ import type {
   User,
 } from '@nx-shay/shared';
 import { UsersService } from '../users/users.service.js';
-
-const JWT_SECRET = process.env['JWT_SECRET'] || 'dev-secret';
-const ACCESS_EXPIRY = process.env['JWT_ACCESS_EXPIRY'] || '15m';
-const REFRESH_EXPIRY = process.env['JWT_REFRESH_EXPIRY'] || '7d';
+import { environment } from '../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -58,11 +55,11 @@ export class AuthService {
   async refresh(refreshToken: string): Promise<{ accessToken: string }> {
     try {
       const payload = this.jwtService.verify(refreshToken, {
-        secret: JWT_SECRET,
+        secret: environment.jwtSecret,
       });
       const accessToken = this.jwtService.sign(
         { sub: payload.sub, username: payload.username },
-        { expiresIn: ACCESS_EXPIRY },
+        { expiresIn: environment.jwtAccessExpiry },
       );
       return { accessToken };
     } catch {
@@ -73,10 +70,10 @@ export class AuthService {
   private generateTokens(userId: string, username: string): AuthTokens {
     const payload = { sub: userId, username };
     const accessToken = this.jwtService.sign(payload, {
-      expiresIn: ACCESS_EXPIRY,
+      expiresIn: environment.jwtAccessExpiry,
     });
     const refreshToken = this.jwtService.sign(payload, {
-      expiresIn: REFRESH_EXPIRY,
+      expiresIn: environment.jwtRefreshExpiry,
     });
     return { accessToken, refreshToken };
   }

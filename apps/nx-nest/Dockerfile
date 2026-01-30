@@ -9,10 +9,14 @@ FROM docker.io/node:lts-alpine AS builder
 
 WORKDIR /app
 
-# Copy package files first (for better layer caching)
+# Copy root and workspace package files first (for better layer caching)
 COPY package*.json ./
+COPY apps/nx-nest/package.json ./apps/nx-nest/
+COPY apps/nx-react/package.json ./apps/nx-react/
+COPY apps/nx-nest-e2e/package.json ./apps/nx-nest-e2e/
+COPY libs/shared/package.json ./libs/shared/
 
-# Install all dependencies
+# Install all dependencies (workspaces-aware)
 RUN npm ci
 
 # Copy all workspace files needed for build
@@ -35,8 +39,10 @@ ENV PORT=8080
 
 WORKDIR /app
 
-# Copy package files
+# Copy root and app package files
 COPY package*.json ./
+COPY apps/nx-nest/package.json ./apps/nx-nest/
+COPY libs/shared/package.json ./libs/shared/
 
 # Install production dependencies only
 RUN npm ci --omit=dev

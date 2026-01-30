@@ -5,16 +5,15 @@ import { UsersModule } from '../users/users.module.js';
 import { AuthController } from './auth.controller.js';
 import { AuthService } from './auth.service.js';
 import { JwtStrategy } from './jwt.strategy.js';
-
-const JWT_SECRET = process.env['JWT_SECRET'] || 'dev-secret';
-const ACCESS_EXPIRY = process.env['JWT_ACCESS_EXPIRY'] || '15m';
+import { environment } from '../environments/environment';
 
 @Module({
   imports: [
     PassportModule,
     JwtModule.register({
-      secret: JWT_SECRET,
-      signOptions: { expiresIn: ACCESS_EXPIRY },
+      secret: environment.jwtSecret,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      signOptions: { expiresIn: environment.jwtAccessExpiry as any },
     }),
     UsersModule,
   ],

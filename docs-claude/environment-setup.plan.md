@@ -84,28 +84,28 @@ Enable running the NestJS app in `development`, `stage`, `production`, and `test
 ### Phase 3: Wire Environment into App Code
 
 **Assigned to**: senior-backend-engineer
-**Date Started**:
-**Status**: [ ] Not Started | [ ] In Progress | [ ] Completed
+**Date Started**: 2026-01-30
+**Status**: [x] Completed
 
-- [ ] Update `apps/nx-nest/src/main.ts` — import `environment` from `./environments/environment` and use `environment.port` instead of `process.env.PORT || 8080`
-- [ ] Update `apps/nx-nest/src/auth/auth.module.ts` — use `environment.jwtSecret` / `environment.jwtAccessExpiry` instead of raw `process.env`
-- [ ] Update `apps/nx-nest/src/auth/auth.service.ts` — same, use environment object
-- [ ] Update `apps/nx-nest/src/auth/jwt.strategy.ts` — use `environment.jwtSecret`
-- [ ] For production env file: values should still fallback to `process.env` so Docker/cloud can override at runtime
+- [x] Update `apps/nx-nest/src/main.ts` — import `environment`, use `environment.port` and `environment.host`
+- [x] Update `apps/nx-nest/src/auth/auth.module.ts` — use `environment.jwtSecret` / `environment.jwtAccessExpiry`
+- [x] Update `apps/nx-nest/src/auth/auth.service.ts` — replaced all 3 process.env JWT vars with environment object
+- [x] Update `apps/nx-nest/src/auth/jwt.strategy.ts` — use `environment.jwtSecret`
+- [x] Production env file already reads from `process.env` with fallbacks (done in phase 1)
 
 #### Phase 3 Completion Report
 
 | Question                                 | Response |
 | ---------------------------------------- | -------- |
-| What was implemented?                    |          |
-| Were there any deviations from the plan? |          |
-| Issues/blockers encountered?             |          |
-| How were issues resolved?                |          |
-| Any technical debt introduced?           |          |
-| Recommendations for next phase?          |          |
+| What was implemented?                    | Wired environment object into main.ts, auth.module.ts, auth.service.ts, jwt.strategy.ts — all process.env references replaced |
+| Were there any deviations from the plan? | Added `host` and `envName` usage in main.ts log output |
+| Issues/blockers encountered?             | `@nestjs/jwt` SignOptions uses `StringValue` from `ms` package, not plain `string` for `expiresIn` |
+| How were issues resolved?                | Used `as any` cast with eslint-disable in auth.module.ts; auth.service.ts had no issue since its overload accepts objects |
+| Any technical debt introduced?           | Single `as any` cast in auth.module.ts JwtModule.register — unavoidable due to `ms` StringValue type |
+| Recommendations for next phase?          | Proceed with VSCode launch.json dropdown picker |
 
-**Completed by**:
-**Date Completed**:
+**Completed by**: senior-backend-engineer
+**Date Completed**: 2026-01-30
 
 #### Notes for Future Phases
 

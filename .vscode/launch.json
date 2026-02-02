@@ -9,9 +9,11 @@
       "restart": true,
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
+      "sourceMapPathOverrides": {
+        "${workspaceFolder}/*": "${workspaceFolder}/*"
+      },
       "resolveSourceMapLocations": [
-        "${workspaceFolder}/dist/apps/nx-nest/**",
-        "${workspaceFolder}/apps/nx-nest/src/**",
+        "${workspaceFolder}/**",
         "!**/node_modules/**"
       ],
       "outFiles": ["${workspaceFolder}/dist/apps/nx-nest/**/*.js"],

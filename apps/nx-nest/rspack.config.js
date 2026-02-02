@@ -1,59 +1,50 @@
 const { NxAppRspackPlugin } = require('@nx/rspack/app-plugin');
 const { join, resolve } = require('path');
 
+const isProd = process.env.NODE_ENV === 'production';
+
 module.exports = {
   entry: {
     main: join(__dirname, 'src/main.ts'),
   },
   output: {
     path: join(__dirname, '../../dist/apps/nx-nest'),
-    clean: false,
-    devtoolModuleFilenameTemplate: (info) => {
-      const filePath = resolve(info.absoluteResourcePath).replace(/\\/g, '/');
-      return filePath.startsWith('/') ? `file://${filePath}` : `file:///${filePath}`;
-    },
+    clean: isProd,
+    ...(isProd
+      ? {}
+      : {
+          devtoolModuleFilenameTemplate: (info) => {
+            return resolve(info.absoluteResourcePath).replace(/\\/g, '/');
+          },
+        }),
   },
   resolve: {
     alias: {
       '@nx-shay/shared': join(__dirname, '../../libs/shared/src/index.ts'),
       '@nx-shay/backend-filters': join(__dirname, '../../libs/backend/filters/src/index.ts'),
     },
-    // extensions: ['.ts', '.js', '.json'],  // file extensions to resolve automatically
   },
 
-  devtool: 'source-map',
+  target: 'node20',
 
-  // --- Node.js polyfill behavior ---
-  // node: {
-  //   __dirname: false,              // don't polyfill __dirname (use real path at runtime)
-  //   __filename: false,
-  // },
-
-  // --- Build target ---
-  // target: 'node18',                // can specify node version e.g. 'node18', 'node20'
-
-  // --- Persistent build cache ---
-  // cache: true,                     // or { type: 'filesystem' } for disk-based cache
-
-  // --- Watch options ---
-  watchOptions: {
-    ignored: [/node_modules/, /dist/],
-    aggregateTimeout: 300,
-  },
-
-  // --- Custom loaders ---
-  // module: {
-  //   rules: [
-  //     { test: /\.yaml$/, use: 'yaml-loader' },
-  //     { test: /\.graphql$/, use: 'graphql-tag/loader' },
-  //   ],
-  // },
-
-  // --- Chunk splitting ---
-  // optimization: {
-  //   splitChunks: { chunks: 'all' },  // split shared code into separate chunks
-  //   minimize: true,                  // enable minimizer (terser/swc)
-  // },
+  ...(isProd
+    ? {
+        optimization: {
+          minimize: true,
+          usedExports: true,
+          sideEffects: true,
+          providedExports: true,
+          innerGraph: true,
+          concatenateModules: true,
+          nodeEnv: 'production',
+        },
+      }
+    : {
+        watchOptions: {
+          ignored: [/node_modules/, /dist/],
+          aggregateTimeout: 300,
+        },
+      }),
 
   plugins: [
     new NxAppRspackPlugin({
@@ -61,22 +52,28 @@ module.exports = {
       main: './src/main.ts',
       tsConfig: './tsconfig.app.json',
       assets: ['./src/assets'],
-      optimization: false,
-      outputHashing: 'none',
-      generatePackageJson: false,
-      // Externalize all node_modules
+      optimization: isProd,
+      sourceMap: isProd ? 'hidden' : true,
+      outputHashing: isProd ? 'all' : 'none',
+      generatePackageJson: isProd,
+      extractLicenses: isProd,
       externalDependencies: 'all',
-
-      // --- Additional NxAppRspackPlugin options ---
-      // skipTypeChecking: true,        // skip TS type-checking within the plugin
-      // sourceMap: true,               // emit source maps (true | false | 'hidden')
-      // extractLicenses: true,         // extract licenses to separate file
-      // namedChunks: true,             // use entry names for chunk filenames
-      // vendorChunk: true,             // separate vendor bundle
-      // runtimeChunk: true,            // separate runtime bundle
-      // extractCss: true,              // extract CSS to files (web targets only)
-      // outputPath: '../../dist/apps/nx-nest',  // override output dir
     }),
+    // Set SWC target to es2021 so async/await and classes are preserved (not downleveled to ES5).
+    // NxAppRspackPlugin configures builtin:swc-loader without a target, defaulting to ES5.
+    // This fixes: breakpoint source maps (no generator state machines) and
+    // "cannot call a class as a function" errors (native classes kept intact).
+    {
+      apply(compiler) {
+        compiler.hooks.afterEnvironment.tap('SetSWCTarget', () => {
+          for (const rule of compiler.options.module.rules) {
+            if (rule.loader === 'builtin:swc-loader' && rule.options?.jsc) {
+              rule.options.jsc.target = 'es2021';
+            }
+          }
+        });
+      },
+    },
     // Plugin to modify externals after NxAppRspackPlugin - bundle @nx-shay/shared
     {
       apply(compiler) {

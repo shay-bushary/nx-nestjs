@@ -75,6 +75,11 @@
         },
         "production": {
           "mode": "production",
+          "optimization": true,
+          "sourceMap": "hidden",
+          "outputHashing": "all",
+          "extractLicenses": true,
+          "generatePackageJson": true,
           "fileReplacements": [
             {
               "replace": "apps/nx-nest/src/environments/environment.ts",
@@ -84,6 +89,11 @@
         },
         "stage": {
           "mode": "production",
+          "optimization": true,
+          "sourceMap": "hidden",
+          "outputHashing": "all",
+          "extractLicenses": true,
+          "generatePackageJson": true,
           "fileReplacements": [
             {
               "replace": "apps/nx-nest/src/environments/environment.ts",

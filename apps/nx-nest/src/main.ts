@@ -10,7 +10,8 @@ import { environment } from './environments/environment';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  console.log("Environment:", environment);
+  console.log("Environment:", environment.envName);
+  console.log('NX_TASK_TARGET_CONFIGURATION:', process.env.NX_TASK_TARGET_CONFIGURATION);
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const { port, host, envName } = environment;

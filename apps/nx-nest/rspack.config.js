@@ -3,6 +3,15 @@ const { join, resolve } = require('path');
 
 const isProd = process.env.NODE_ENV === 'production';
 
+// Determine file replacements based on the active Nx configuration
+const nxConfig = process.env.NX_TASK_TARGET_CONFIGURATION || 'development';
+const fileReplacementsMap = {
+  production: [{ replace: join(__dirname, 'src/environments/environment.ts'), with: join(__dirname, 'src/environments/environment.production.ts') }],
+  stage: [{ replace: join(__dirname, 'src/environments/environment.ts'), with: join(__dirname, 'src/environments/environment.stage.ts') }],
+  test: [{ replace: join(__dirname, 'src/environments/environment.ts'), with: join(__dirname, 'src/environments/environment.test.ts') }],
+};
+const fileReplacements = fileReplacementsMap[nxConfig] || [];
+
 module.exports = {
   entry: {
     main: join(__dirname, 'src/main.ts'),
@@ -13,10 +22,10 @@ module.exports = {
     ...(isProd
       ? {}
       : {
-          devtoolModuleFilenameTemplate: (info) => {
-            return resolve(info.absoluteResourcePath).replace(/\\/g, '/');
-          },
-        }),
+        devtoolModuleFilenameTemplate: (info) => {
+          return resolve(info.absoluteResourcePath).replace(/\\/g, '/');
+        },
+      }),
   },
   resolve: {
     alias: {
@@ -29,22 +38,22 @@ module.exports = {
 
   ...(isProd
     ? {
-        optimization: {
-          minimize: true,
-          usedExports: true,
-          sideEffects: true,
-          providedExports: true,
-          innerGraph: true,
-          concatenateModules: true,
-          nodeEnv: 'production',
-        },
-      }
+      optimization: {
+        minimize: true,
+        usedExports: true,
+        sideEffects: true,
+        providedExports: true,
+        innerGraph: true,
+        concatenateModules: true,
+        nodeEnv: 'production',
+      },
+    }
     : {
-        watchOptions: {
-          ignored: [/node_modules/, /dist/],
-          aggregateTimeout: 300,
-        },
-      }),
+      watchOptions: {
+        ignored: [/node_modules/, /dist/],
+        aggregateTimeout: 300,
+      },
+    }),
 
   plugins: [
     new NxAppRspackPlugin({
@@ -58,6 +67,7 @@ module.exports = {
       generatePackageJson: isProd,
       extractLicenses: isProd,
       externalDependencies: 'all',
+      fileReplacements,
     }),
     // Set SWC target to es2021 so async/await and classes are preserved (not downleveled to ES5).
     // NxAppRspackPlugin configures builtin:swc-loader without a target, defaulting to ES5.

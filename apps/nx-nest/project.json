@@ -133,7 +133,8 @@
       "defaultConfiguration": "development",
       "options": {
         "buildTarget": "nx-nest:build",
-        "runBuildTargetDependencies": true,
+        "runBuildTargetDependencies": false,
+        "watch": true,
         "inspect": true,
         "port": 9229
       },

@@ -38,7 +38,7 @@ module.exports = {
   // --- Watch options ---
   watchOptions: {
     ignored: [/node_modules/, /dist/],
-    aggregateTimeout: 1000,
+    aggregateTimeout: 300,
   },
 
   // --- Custom loaders ---

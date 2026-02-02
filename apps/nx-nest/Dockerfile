@@ -26,7 +26,7 @@ COPY apps ./apps
 
 # Sync workspace and build the nx-nest app
 RUN npx nx sync --verbose || true
-RUN npx nx build nx-nest --verbose
+RUN npx nx build nx-nest --configuration=production --verbose
 
 # =============================================================================
 # Stage 2: Production - Minimal runtime image

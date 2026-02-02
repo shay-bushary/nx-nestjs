@@ -77,7 +77,7 @@
           "mode": "production",
           "optimization": true,
           "sourceMap": "hidden",
-          "outputHashing": "all",
+          "outputHashing": "none",
           "extractLicenses": true,
           "generatePackageJson": true,
           "fileReplacements": [
@@ -91,7 +91,7 @@
           "mode": "production",
           "optimization": true,
           "sourceMap": "hidden",
-          "outputHashing": "all",
+          "outputHashing": "none",
           "extractLicenses": true,
           "generatePackageJson": true,
           "fileReplacements": [

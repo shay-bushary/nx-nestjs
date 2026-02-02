@@ -54,7 +54,7 @@ module.exports = {
       assets: ['./src/assets'],
       optimization: isProd,
       sourceMap: isProd ? 'hidden' : true,
-      outputHashing: isProd ? 'all' : 'none',
+      outputHashing: 'none',
       generatePackageJson: isProd,
       extractLicenses: isProd,
       externalDependencies: 'all',

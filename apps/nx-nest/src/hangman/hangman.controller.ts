@@ -1,9 +1,10 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
-import { HangmanService, ValidateGuessDto } from './hangman.service.js';
+import { HangmanService } from './hangman.service.js';
+import type { ValidateGuessDto } from './hangman.service.js';
 
 @Controller('hangman')
 export class HangmanController {
-  constructor(private readonly hangmanService: HangmanService) {}
+  constructor(private readonly hangmanService: HangmanService) { }
 
   @Get('word')
   getWord() {

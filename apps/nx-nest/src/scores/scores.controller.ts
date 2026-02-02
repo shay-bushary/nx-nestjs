@@ -8,7 +8,8 @@ import {
 } from '@nestjs/common';
 import type { ApiResponse, GameScore } from '@nx-shay/shared';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard.js';
-import { ScoresService, SubmitScoreDto } from './scores.service.js';
+import { ScoresService } from './scores.service.js';
+import type { SubmitScoreDto } from './scores.service.js';
 
 @Controller('scores')
 export class ScoresController {

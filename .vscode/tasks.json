@@ -1,0 +1,35 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "serve:nx-nest",
+      "type": "shell",
+      "command": "npx nx serve nx-nest -c ${input:environment}",
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^$"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "Debugger listening on"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "environment",
+      "type": "pickString",
+      "description": "Select environment for nx-nest",
+      "options": ["development", "test", "stage", "production"],
+      "default": "development"
+    }
+  ]
+}

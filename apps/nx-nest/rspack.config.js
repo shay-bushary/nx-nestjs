@@ -1,5 +1,5 @@
 const { NxAppRspackPlugin } = require('@nx/rspack/app-plugin');
-const { join } = require('path');
+const { join, resolve } = require('path');
 
 module.exports = {
   entry: {
@@ -8,6 +8,10 @@ module.exports = {
   output: {
     path: join(__dirname, '../../dist/apps/nx-nest'),
     clean: false,
+    devtoolModuleFilenameTemplate: (info) => {
+      const filePath = resolve(info.absoluteResourcePath).replace(/\\/g, '/');
+      return filePath.startsWith('/') ? `file://${filePath}` : `file:///${filePath}`;
+    },
   },
   resolve: {
     alias: {
@@ -17,8 +21,7 @@ module.exports = {
     // extensions: ['.ts', '.js', '.json'],  // file extensions to resolve automatically
   },
 
-  // --- Source maps ---
-  // devtool: 'source-map',           // 'eval' | 'source-map' | 'cheap-module-source-map' | false
+  devtool: 'source-map',
 
   // --- Node.js polyfill behavior ---
   // node: {

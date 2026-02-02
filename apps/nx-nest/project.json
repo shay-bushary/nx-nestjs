@@ -68,10 +68,10 @@
       },
       "configurations": {
         "development": {
-          "mode": "development"
-          // "sourceMap": true,
-          // "optimization": false,
-          // "namedChunks": true
+          "mode": "development",
+          "sourceMap": true,
+          "optimization": false,
+          "namedChunks": true
         },
         "production": {
           "mode": "production",

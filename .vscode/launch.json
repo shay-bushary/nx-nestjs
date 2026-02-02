@@ -3,30 +3,19 @@
   "configurations": [
     {
       "type": "node",
-      "request": "launch",
-      "name": "Debug @nx-workspace/nx-nest with Nx",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["nx", "serve", "@nx-workspace/nx-nest", "-c", "${input:environment}"],
-      "env": {
-        "NODE_OPTIONS": "--inspect=9229"
-      },
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
+      "request": "attach",
+      "name": "Debug nx-nest",
+      "port": 9229,
+      "restart": true,
       "skipFiles": ["<node_internals>/**"],
       "sourceMaps": true,
-      "outFiles": [
-        "${workspaceFolder}/apps/nx-nest/dist/**/*.(m|c|)js",
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/dist/apps/nx-nest/**",
+        "${workspaceFolder}/apps/nx-nest/src/**",
         "!**/node_modules/**"
-      ]
-    }
-  ],
-  "inputs": [
-    {
-      "id": "environment",
-      "type": "pickString",
-      "description": "Select the environment to run",
-      "options": ["development", "stage", "production", "test"],
-      "default": "development"
+      ],
+      "outFiles": ["${workspaceFolder}/dist/apps/nx-nest/**/*.js"],
+      "preLaunchTask": "serve:nx-nest"
     }
   ]
 }

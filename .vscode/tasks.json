@@ -5,6 +5,13 @@
       "label": "serve:nx-nest",
       "type": "shell",
       "command": "npx nx serve nx-nest -c ${input:environment}",
+      "windows": {
+        "options": {
+          "env": {
+            "PATH": "${env:PATH};${env:SystemRoot}\\System32"
+          }
+        }
+      },
       "isBackground": true,
       "problemMatcher": {
         "pattern": {

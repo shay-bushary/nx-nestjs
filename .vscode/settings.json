@@ -1,5 +1,6 @@
 {
   "files.associations": {
     "project.json": "jsonc"
-  }
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell"
 }
